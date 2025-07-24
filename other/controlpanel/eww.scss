@@ -1,0 +1,226 @@
+
+/* Basic menu styles */
+
+.launchermenu {
+  background-color: $bg;
+  border-radius: 0.5rem;
+  margin: 0.8rem 0.8rem;
+  min-width: 18rem;
+}
+
+/* MPD controls styles */
+
+.mpd-controls-sec {
+  background-color: $bg-2;
+  border-radius: 0.5rem;
+}
+
+.mpdcon {
+  border-radius: 0.5rem;
+  min-height: 40px;
+  min-width: 350px;
+  padding: 1rem 1rem;
+}
+
+.btn-info-mpd {
+  font-family: Material Design Icons Desktop;
+  font-size: 1.3rem;
+  color: $fg;
+  padding: 0 0.6rem;
+}
+
+/* Top usercard styles */
+
+.usercard {
+  background-color: $bg-2;
+  border-radius: 0.5rem;
+}
+
+.face {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  min-height: 65px;
+  min-width: 65px;
+  border: .2rem solid $bg-alt;
+  border-radius: 0.5rem;
+  margin: 10px -8px 10px 10px;
+}
+
+.user-host {
+  /*color: $fg;*/
+  font-family: "0xProto Nerd Font";
+  font-weight: Normal;
+  font-size: 1.3rem;
+  margin: 0px -8px 0px 0px
+}
+
+.host {
+  color: $fg;
+  font-family: "0xProto Nerd Font";
+  font-size: 1.0rem;
+  padding-left: 10px;
+}
+
+.text-pfp {
+  padding-left: 15px;
+  margin-left: 15px;
+}
+
+/* Volume bar and button styles */
+
+.volume {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.volume trough {
+  all: unset;
+  padding: 0.5em;
+  background-color: $bg-alt;
+  border-radius: 15px;
+}
+
+.volume highlight {
+  padding: 0.5em;
+  background-color: $fg;
+  border-radius: 15px;
+}
+
+.volume-text {
+  padding-left: 10px;
+  padding-right: 10px;
+} 
+
+.volume-btn {
+  margin-left: 10px;
+  margin-right: 10px;
+  font-size: 18px;
+}
+
+
+
+/* Tool box styles */
+
+.tools-power-sec {
+  padding-top: 5px;
+}  
+
+.tools-sec {
+  background-color: $bg-2;
+  border-radius: 0.5rem;
+}
+
+.tools-btns-sec {
+  padding-left: 5px;
+  padding-top: 5px;
+}
+
+.tools-main {
+  padding: 0.3rem 0.2rem;
+}
+
+.tools-box {
+  font-family: "Material Design Icons Desktop";
+  font-size: 1.4rem;
+  border-radius: 0.5rem;
+  background-color: $bg-alt;
+}
+
+/* Tool button styles */
+
+.tool-other-power-btn {
+  color: $fg;
+  background-color: $bg-alt;
+  border-radius: 50%;
+  font-size: 2.0rem;
+}
+
+.tool-power-btn {
+  color: $fg;
+  background-color: $bg-alt;
+  border-radius: 50%;
+  font-size: 2.0rem;
+}
+
+.tool-power-btn:hover {
+  color: $red;
+}
+
+.updateapt-btn {
+  color: $fg;
+  background-color: $bg-alt;
+  border-radius: 50%;
+  font-size: 2.5rem;
+}
+
+.screenshot-btn {
+  color: $fg;
+  background-color: $bg-alt;
+  border-radius: 50%;
+  font-size: 2.5rem;
+}
+
+.hibernate-btn {
+  color: $fg;
+  background-color: $bg-alt;
+  border-radius: 50%;
+  font-size: 3.0rem;
+}
+
+.hibernate-btn:hover {
+  color: $red;
+}
+
+
+.wifi-btn {
+  color: $fg;
+  background-color: $bg-alt;
+  border-radius: 50%;
+  font-size: 2.0rem;
+}
+
+.wifi-no-btn {
+  color: $disabled;
+  font-size: 2.0rem;
+}
+
+.airplane-btn {
+  color: $fg;
+  background-color: $bg-alt;
+  border-radius: 50%;
+  font-size: 2.0rem;
+}
+
+.airplane-no-btn {
+  color: $disabled;
+  font-size: 2.0rem;
+}
+
+.redshift-btn {
+  color: $fg;
+  background-color: $bg-alt;
+  border-radius: 50%;
+  font-size: 2.0rem;
+}
+
+.redshift-no-btn {
+  color: $disabled;
+  font-size: 2.0rem;
+}
+
+
+.dnd-btn {
+  color: $fg;
+  background-color: $bg-alt;
+  border-radius: 50%;
+  font-size: 2.0rem;
+}
+
+.dnd-no-btn {
+  color: $disabled;
+  font-size: 2.0rem;
+}
+
+
+

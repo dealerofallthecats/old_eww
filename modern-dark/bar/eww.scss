@@ -1,0 +1,154 @@
+
+.wsbox {
+    font-size: 1.1em;
+    font-family: "0xProto Nerd Font";
+    margin: 0 .5em 0 .5em;
+    padding: 0 .5em 1em .5em;
+    border-radius: 10px;
+    background-color: $bg;
+
+    .wsf {
+      background-color: $accent;
+      margin: .1em .5em;
+      margin-top: 1em;
+      padding-top: 1em;
+      padding-bottom: 1em;
+      border-radius: 5px;
+      color: $accent;
+    }
+    .wso {
+      background-color: $fg;
+      margin: .1em .5em;
+      margin-top: 1em;
+      padding-top: .5em;
+      padding-bottom: .5em;
+      border-radius: 5px;
+      color: $fg;
+    }
+    .ws {
+      background-color: $disab;
+      margin: .1em .5em;
+      margin-top: 1em;
+      padding-top: 0;
+      padding-bottom: 0;
+      border-radius: 5px;
+      color: $disab;
+    }
+}
+
+.bar-main-box {
+  background-color: $bg;
+}
+
+.bar-main-box-two {
+  margin-right: .5em
+}
+
+.image-pfp-bar {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  min-height: 36px;
+  min-width: 36px;
+  border-radius: 5px;
+  margin: .9em .5em .5em .9em;
+}
+
+.bar {
+  border-radius:  0px 5px 5px 0px;
+}
+
+.time-box {
+  margin: .5em .5em .3em;
+  padding: .25em .5em;
+  border-radius: 10px;
+  background-color: $bg;
+  font-size: 1.1em;
+  font-weight: 600;
+  color: $accent;
+}
+
+.quicksettings-bar {
+  margin: .5em .5em .5em;
+  padding: .25em .25em;
+  border-radius: 10px;
+  background-color: $bg;
+  font-size: 1.4em;
+  color: $fg;
+
+  button {
+    color: $fg;
+    background-color: $bg;
+  }
+}
+
+.battery-box {
+  margin: .5em .5em 1em; 
+  padding: .25em .25em;
+  border-radius: 10px;
+  background-color: $bg;
+  font-size: 1.1em;
+  font-weight: 600;
+  color: $fg;
+}
+
+.powermode-box {
+  margin: 1em .5em 1em;
+  padding: .25em .25em;
+  border-radius: 10px;
+  background-color: $bg;
+  font-size: 1.1em;
+  font-weight: 600;
+  color: $fg;
+
+  button {
+    color: $fg;
+    background-color: $bg;
+  }
+}
+
+.systemtray {
+  margin: .5em .5em .5em;
+  padding: .25em .25em;
+  border-radius: $crounding;
+  background-color: $bg;
+  font-size: 1.1em;
+
+  * {
+    border-radius: $crounding;
+  }
+}
+
+.systemtray-two menu {
+  padding: .3em;
+  background-color: $bg;
+  border-radius: $crounding;
+  >menuitem {
+    padding: .3em;
+    background-color: $bg;
+    border-radius: $crounding;
+    color: $fg;
+    margin: .3em;
+
+    &:disabled {
+      color: $disab;
+    }
+  }
+  * {
+    border-radius: $crounding;
+  }
+}
+
+.fakecornerl {
+  background-color: transparent;
+}
+
+.fakecornersl {
+  transition: box-shadow 500ms, border-radius 500ms, margin 500ms;
+  border-radius: 8px; 
+  box-shadow: 
+    -20px -20px 0px $bg,
+    -20px 20px 0px $bg,
+    20px 20px 0px $bg,
+    20px -20px 0px $bg
+}

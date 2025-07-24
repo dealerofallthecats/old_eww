@@ -1,0 +1,98 @@
+
+.leftbutton {
+	padding: 0;
+	margin: 0;
+	background-color: transparent;
+}
+
+
+.leftbutton-btn {
+	padding: 0;
+	margin: .3em 1em .3em .5em;
+	background-color: $fg;
+	color: $fg;
+	border-radius: 4px;
+}
+
+.leftwidget-main {
+	background-color: $bg;
+	border-radius: 0 $crounding $crounding 0;
+	margin: 0;
+	padding: .5em;
+}
+
+.leftwidget-main-two {
+	padding: .5em;
+}
+
+
+// Toggles
+$tools-box-buttons-rounding: $crounding;
+
+.tool-button {
+  padding: 0em .5em 0 .5em;
+}
+
+.tool-button-text {
+  margin: 0em 0em 0em 1.5em;
+  min-width: 8em;
+  font-size: .5em;
+}
+
+.tool-btn-ani {
+
+&.tool-btn {
+  background-color: $accent;
+  color: $bg-alt;
+  border-radius: $tools-box-buttons-rounding;
+  font-size: 1.6em;
+
+  button {
+    color: $bg-alt;
+    border-radius: $tools-box-buttons-rounding;
+    background-color: $accent;
+    padding-right: 1.3em;
+
+    label {
+      color: $bg-alt;
+      font-size: 1.6em;
+    }
+  }
+
+  .tool-btn-text {
+    color: $bg-alt;
+  }
+}
+
+&.no-tool-btn {
+  background-color: $bg-alt;
+  color: $disab;
+  border-radius: $tools-box-buttons-rounding;
+  font-size: 1.6em;
+
+  button {
+    color: $disab;
+    border-radius: $tools-box-buttons-rounding;
+    background-color: $bg-alt;
+    padding-right: 1.3em;
+
+    label {
+      color: $disab;
+      font-size: 1.6em;
+    }
+  }
+
+  button:hover {
+    color: $fg;
+
+    label {
+      color: $fg;
+    }
+  }
+
+  .tool-btn-text {
+    color: $disab
+  }
+}
+
+}

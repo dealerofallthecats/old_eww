@@ -1,0 +1,50 @@
+
+.time-lock {
+  font-size: 4.1em;
+  font-weight: 600;
+  color: $fg;
+}
+
+.date-lock {
+  font-size: 1.8em;
+  color: $accent;
+  font-weight: 500;
+  font-style: italic;
+}
+
+.music-cover-lock {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  min-height: 150px;
+  min-width: 150px;
+  border-radius: $crounding;
+}
+
+.music-titles-box-lock {
+  margin: 1.3em;
+}
+
+.music-title-lock {
+  font-size: 2.2em;
+  font-weight: 600;
+  color: $fg;
+}
+
+.music-artist-lock {
+  font-size: 1.5em;
+  font-weight: 500;
+  color: $accent;
+}
+
+
+.info-label-disab-lock {
+  font-size: 2em;
+  color: $disab;
+}
+
+.info-label-lock {
+  font-size: 2em;
+  color: $fg;
+}
+

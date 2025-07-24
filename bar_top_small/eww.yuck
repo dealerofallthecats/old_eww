@@ -1,0 +1,78 @@
+
+(defpoll time-top-small :interval "1s" "date '+%I:%M %p'")
+
+(defpoll battery-top-small :interval "3s" "./bar_top_small/scripts/battery &")
+
+(defpoll wifi_icon_top_small :interval "200ms" "./bar_top_small/scripts/Network &")
+(defpoll bluetooth_icon_top_small :interval "200ms" "./bar_top_small/scripts/Bluetooth &")
+
+(deflisten workspaces-script-top-small "./bar_top_small/scripts/workspaces")
+(defwidget workspaces_top_small []
+  (literal :content workspaces-script-top)
+)
+
+(defwidget time_statuses_top_small []
+  (box :orientation "h"
+    :height "70"
+    :spacing "5"
+    :class "time-statuses-bar-top-small"
+    (label :text "${battery-top-small}    ${wifi_icon_top}  ${bluetooth_icon_top}   ${time-top}" )
+  )
+)
+
+(defwidget systemtray_top_small []
+  (box :orientation "h"
+    :class "systemtray-top"
+    :valign "center"
+    (systray :orientation "h"
+      :class "systemtray-top-two"
+      :icon-size "20"
+      :spacing "10"
+      :prepend-new true
+    )
+  )
+)
+
+(defwidget weather_top_small []
+  (box :orientation "h"
+    :space-evenly "false"
+    :class "weather-box-top"
+    :height "40"
+    (box :orientation "h"
+      :space-evenly "false"
+      :spacing 7
+      (label :halign "start" :class "weather-icon-top" :text "${weather-top-icon}")
+      (box :orientation "v"
+        :space-evenly "false"
+        :valign "center"
+        :class "weather-box-detail-top"
+        (label :halign "start" :text "${weather-top-temp}")
+        (label :halign "start" :text "${weather-top-cond}")
+      )
+    )
+  )
+)
+
+(defwindow bar_top_small
+  :monitor 0
+  :geometry (geometry :x "0px"
+    :y "1%"
+    :width "20%"
+    :height "6.5%"
+    :anchor "top center"
+    )
+  :stacking "fg"
+  :windowtype "dock"
+  :wm-ignore false 
+  (box :orientation "h"
+    :class "bar-main-box-top-small"
+    (box :orientation "h"
+      :halign "center"
+      :space-evenly "false"
+      (weather_top_small)
+      (workspaces_top_small)
+      (systemtray_top_small)
+      (time_statuses_top_small)
+    )
+  )
+)

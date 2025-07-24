@@ -1,0 +1,67 @@
+
+;; User info
+(defpoll uptime :interval "1m" "./ascii/scripts/uptime")
+(defpoll time-hour :interval "1s" "date +%I")
+(defpoll time-min :interval "1s" "date +%M")
+(defpoll time-pmam :interval "1s" "date +%p")
+(defpoll day :interval "1s" "date '+%d %B'")
+(defpoll daylong :interval "1s" "date '+%A %d, %B'")
+(defvar PFP "./ascii/assets/pfp.jpg")
+(defpoll user_name :interval "12h" "user=$(whoami); if [[ \"$user\" == \"catdealer\" ]]; then echo \"あらゆる猫のディーラー\"; else echo $user; fi")
+
+;; Battery info
+(defpoll battery_per :interval "1min" "cat /sys/class/power_supply/BAT0/capacity")
+(defpoll battery_class :interval "2s" "./ascii/scripts/fb.out --getBattery 0")
+(defpoll battery_icon :interval "1s" "./ascii/scripts/fb.out --getBattery 2")
+(defpoll battery_icon_class :interval "1s" "./ascii/scripts/fb.out --getBattery 1")
+(defpoll battery_status :interval "1s" "cat /sys/class/power_supply/BAT0/status")
+
+;; Bar workspaces
+(deflisten workspaces_classes :initial '["ws", "ws", "ws", "ws", "ws"]' "./ascii/scripts/fb.out --getWorkspaces")
+
+;; Quick toggles
+(defpoll net_info :interval "300ms" "./ascii/scripts/fb.out --getNetwork")
+(defpoll blue_info :interval "300ms" "./ascii/scripts/fb.out --getBluetooth")
+(defpoll night_info :interval "300ms" "./ascii/scripts/Nightmode --info")
+
+;; Sliders
+(defpoll sliders-volume :interval "100ms" "amixer get Master | grep -oP '\\d+%' | head -1 | tr -d '%'")
+(defpoll sliders-brightness :interval "100ms" "brightnessctl i | grep -oP '(\\d+%)' | tr -d '% '")
+
+;; Music controls 
+(defpoll music-cover :interval "1s" "./ascii/scripts/music --cover")
+(defpoll music-title :interval "1s" "./ascii/scripts/music --title")
+(defpoll music-artist :interval "1s" "./ascii/scripts/music --artist")
+(defpoll playing-icon :interval "500ms" "./ascii/scripts/music --playing-icon")
+
+(defvar music-next-icon "./ascii/assets/next.png")
+(defvar music-back-icon "./ascii/assets/previous.png")
+
+;; Task
+(deflisten current_tasks "./ascii/scripts/tasks.sh --current")
+
+;; Whiteboard
+(deflisten notesmarkdown "./ascii/scripts/notesmd.py")
+
+;; Notifications
+(deflisten notifications :initial '{
+    "count": 0,
+    "dnd": false,
+    "notifications": [],
+    "popups": []
+    }'
+    "./ascii/scripts/notifCatch.py"
+)
+
+(defpoll notification_history :initial '{
+  "count": 0,
+  "dnd": false,
+  "notifications": [],
+  "popups": []
+  }'
+  :interval "1s"
+  "cat ~/.cache/eww/notifications.json"
+)
+
+(include "./ascii/notifications/eww.yuck")
+(include "./ascii/lockscreen/eww.yuck")

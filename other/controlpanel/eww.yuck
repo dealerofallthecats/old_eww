@@ -1,0 +1,259 @@
+;; Vars ;;
+
+;; Volume
+(defpoll volume-btn :interval "500ms" "../eww/controlpanel/scripts/Vol")
+(defpoll volume :interval "500ms"
+	"amixer -D pulse sget Master | grep 'Left:' | awk -F'[][]' '{ print $2 }' | tr -d '%'")
+;; Time
+(defpoll curtime :interval "1s" "date '+%d %b, %I:%M %p'")
+(defpoll message :interval "10s" "../eww/controlpanel/scripts/Time")
+
+;; Fetch
+(defpoll os :interval "24h" "../eww/controlpanel/scripts/fetch os")
+(defpoll wm :interval "24h" "../eww/controlpanel/scripts/fetch wm")
+
+;; Profile
+(defvar IMAGEP "../assets/profile.png")
+(defpoll username :interval "24h" "whoami")
+(defpoll hostname :interval "24h" "cat /etc/hostname")
+(defpoll uptime :interval "30s" "uptime -p | sed -E -e 's/hour(s)?/hrs/g' -e 's/minute(s)?/min/g'")
+
+;; Disk
+
+(defpoll diskused :interval "5m" "df -h /dev/sda2 | grep /dev/sda2 | awk -F'G' '{ print $4 }' | tr -d '/ '")
+
+;; Apt
+(defpoll updates :interval "5m" "apt-get -q -y --ignore-hold --allow-change-held-packages --allow-unauthenticated -s dist-upgrade | /bin/grep  ^Inst | wc -l")
+(defpoll packages :interval "1h" "dpkg -l | grep -c '^ii'")
+
+
+;; mpd
+(defpoll title :interval "1s" "../eww/controlpanel/scripts/mpd title")
+(defpoll playing :interval "100ms" "../eww/controlpanel/scripts/mpd playpause")
+
+;; Networking
+(defpoll net_status :interval "100ms" "../eww/controlpanel/scripts/Network --status")
+(defpoll net_icon :interval "100ms" "../eww/controlpanel/scripts/Network --icon")
+
+;; Temp
+(defpoll temp :interval "5s" "../src/temp.sh")
+
+;; Bluetooth
+(defpoll blue_icon :interval "3s" "../eww/controlpanel/scripts/Bluetooth --icon")
+(defpoll blue_name :interval "3s" "../eww/controlpanel/scripts/Bluetooth --name")
+
+;; Airplane Mode
+(defpoll airplane_icon :interval "100ms" "../eww/controlpanel/scripts/Airplane --icon")
+(defpoll airplane_status :interval "100ms" "../eww/controlpanel/scripts/Airplane --status")
+
+;; Redshift
+(defpoll redshift_status :interval "100ms" "../eww/controlpanel/scripts/Redshift state")
+
+;; Terminal selector
+(defpoll terminal_status :interval "2s" "cat ../src/.term")
+
+;; Do not distube
+(defpoll dnd_state :interval "100ms" "../eww/controlpanel/scripts/DND --status")
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Widgets ;;
+
+(defwidget launchermenu []
+     (box :class "launchermenu"
+          :orientation "v"
+          :space-evenly "false"
+          :spacing 7
+          (pfp)
+	  (mpd-controls)
+          (tools)
+  ))
+
+(defwidget mpd-controls []
+        (box :orientation "h"
+                 :space-evenly "false"
+                 :spacing 7
+		 :class "mpd-controls-sec"
+                 (box :orientation "h"
+                         :space-evenly "false"
+                         :spacing 10
+                         :valign "center"
+                         :halign "center"
+                         :hexpand true
+                         :vexpand true
+                         :class "mpdcon"
+                         (eventbox :cursor "pointer"
+                                  (button :class "btn-info-mpd" :tooltip "Previous Song" :onclick "mpc -q prev" ""))
+                         (eventbox :cursor "pointer"
+                                  (button :class "btn-info-mpd" :tooltip "Play/Pause" :onclick "mpc -q toggle" playing))
+                         (eventbox :cursor "pointer"
+                                  (button :class "btn-info-mpd" :tooltip "Next Song" :onclick "mpc -q next" ""))
+			 (label :wrap true :text "${title}")
+
+)
+))
+
+
+(defwidget pfp []
+	(box :orientation "h"
+		 :space-evenly "false"
+		 :class "usercard"
+		 (box :space-evenly "false"
+			  :hexpand true
+			  :width 270
+			  :orientation "h"
+			  :spacing "10"
+			  (box :style "background-image: url('/home/user/.config/eww/controlpanel/assets/profile.png')" :class "face"
+				   :halign "center")
+			  (box :orientation "v"
+				   :space-evenly "false"
+				   :hexpand true
+				   :valign "center"
+				   :class "text-pfp"
+				   (box :class "user-host"
+						(label :text "${message}, CatDealer."))
+			       (box :class "host"
+						(label :text "It's ${curtime}."))
+						)
+		)
+	)
+)	  
+                 
+
+
+(defwidget tools []
+ (box :orientation "h" :class "tools-sec" :space-evenly "false"
+  (box :orientation "v" :space-evenly "true" :class "tools-btns-sec" 
+    (box :orientation "h" :space-evenly "true" :spacing 1
+
+      (box  :class "tools-main" :orientation "v" :space-evenly "false" :spacing 2
+        (eventbox :class "tools-box" :width 60 :height 60 :halign "center" :cursor "pointer" :tooltip "Wired/WiFi network connection"
+          (button :class {net_status != "Offline" ? "wifi-btn" : "wifi-no-btn"}
+                  :onclick "~/.config/bspwm/extra/nmdm/NetManagerDM" net_icon))
+	)
+
+      (box  :class "tools-main" :orientation "v" :space-evenly "false" :spacing 2
+        (eventbox :class "tools-box" :width 60 :height 60 :halign "center" :cursor "pointer" :tooltip "Airplane Mode"
+          (button :class {airplane_status == "On" ? "airplane-btn" : "airplane-no-btn"} :onclick "../eww/controlpanel/scripts/Airplane --toggle &" airplane_icon))
+	)
+      (box :class "tools-main" :orientation "v" :space-evenly "false" :spacing 2
+        (eventbox :class "tools-box" :width 60 :height 60 :halign "center" :cursor "pointer" :tooltip "Take a screenshot"
+          (button :class "screenshot-btn" :onclick "~/.config/bspwm/extra/screenshoter/screenshoter" "󱣵"))
+      )
+)
+
+    (box  :orientation "h" :space-evenly "false" :spacing 1
+      (box  :class "tools-main" :orientation "v" :space-evenly "false" :spacing 2
+        (eventbox :class "tools-box" :width 60 :height 60 :halign "center" :cursor "pointer" :tooltip "Night Light"
+          (button :class {redshift_status == "on" ? "redshift-btn" : "redshift-no-btn"} :onclick "../eww/controlpanel/scripts/Redshift toggle &" ""))
+	)
+
+      (box  :class "tools-main" :orientation "v" :space-evenly "false" :spacing 2
+        (eventbox :class "tools-box" :width 60 :height 60 :halign "center" :cursor "pointer" :tooltip "Do Not Disturb"
+          (button :class {dnd_state == "Off" ? "dnd-no-btn" : "dnd-btn"} :onclick "../eww/controlpanel/scripts/DND --toggle &" "󱙍"))
+        )
+      (box  :class "tools-main" :orientation "v" :space-evenly "false" :spacing 2
+        (eventbox :class "tools-box" :width 60 :height 60 :halign "center" :cursor "pointer" :tooltip "${updates} packages able to be updated."
+          (button :class "updateapt-btn" :onclick "bspc rule -a kitty -o state=floating follow=on center=true rectangle=790x510+0+0 && ~/.local/kitty.app/bin/kitty ~/.config/bspwm/update/update.sh" "󰏕"))
+        ))
+  )
+(box :orientation "v" :space-evenly "true" :class "tools-power-sec"
+  (box :orientation "h" :space-evenly "true" :spacing 1
+
+      (box  :class "tools-main" :orientation "v" :space-evenly "false" :spacing 2
+        (eventbox :class "tools-box" :width 60 :height 60 :halign "center" :cursor "pointer" :tooltip "Lock"
+          (button :class "tool-other-power-btn"
+                  :onclick "betterlockscreen -l" "󰌾"))
+        )
+
+      (box  :class "tools-main" :orientation "v" :space-evenly "false" :spacing 2
+        (eventbox :class "tools-box" :width 60 :height 60 :halign "center" :cursor "pointer" :tooltip "Sleep"
+          (button :class "tool-other-power-btn" :onclick "mpc -q pause & systemctl suspend & betterlockscreen --lock" "󰤄"))
+        )
+      (box :class "tools-main" :orientation "v" :space-evenly "false" :spacing 2
+        (eventbox :class "tools-box" :width 60 :height 60 :halign "center" :cursor "pointer" :tooltip "Logout"
+          (button :class "tool-other-power-btn" :onclick "bspc rule -a kitty -o state=floating follow=on center=true rectangle=790x510+0+0 && ~/.local/kitty.app/bin/kitty ~/scripts/tools/backup_power/backup_logout.sh" "󰍃"))
+      )
+)
+
+    (box  :orientation "h" :space-evenly "false" :spacing 1
+      (box  :class "tools-main" :orientation "v" :space-evenly "false" :spacing 2
+        (eventbox :class "tools-box" :width 60 :height 60 :halign "center" :cursor "pointer" :tooltip "Restart"
+          (button :style "font-size: 2.3rem" :class "tool-power-btn" :onclick "bspc rule -a kitty -o state=floating follow=on center=true rectangle=790x510+0+0 && ~/.local/kitty.app/bin/kitty ~/scripts/tools/backup_power/backup_restart.sh" "󰜉"))
+        )
+
+      (box  :class "tools-main" :orientation "v" :space-evenly "false" :spacing 2
+        (eventbox :class "tools-box" :width 60 :height 60 :halign "center" :cursor "pointer" :tooltip "Hibernate"
+          (button :class "hibernate-btn" :onclick "mpc -q pause & betterlockscreen -l & systemctl hibernate" "󱖒"))
+        )
+      (box  :class "tools-main" :orientation "v" :space-evenly "false" :spacing 2
+        (eventbox :class "tools-box" :width 60 :height 60 :halign "center" :cursor "pointer" :tooltip "Shutdown"
+          (button :class "tool-power-btn" :onclick "bspc rule -a kitty -o state=floating follow=on center=true rectangle=790x510+0+0 && ~/.local/kitty.app/bin/kitty ~/scripts/tools/backup_power/backup_poweroff.sh" ""))
+        )
+        )
+)
+(box :orientation "v" :space-evenly "false"
+   (scale :min 0
+        :class "volume"
+        :max 101
+        :value {volume == "" ? 0 : volume}
+        :orientation "v"
+        :width 30
+	:flipped "true"
+        :marks true
+        :height 130
+        :tooltip "Volume: ${volume}%"
+        :onchange "amixer -D pulse sset Master {}%")
+   (button :class "volume-btn" :onrightclick "amixer -D pulse set Master toggle" :onclick "pavucontrol" "  ${volume-btn}")
+)
+
+)
+)
+
+
+
+(defwidget time []
+  (box :class "timebox" :hexpand true :width 350 :orientation "v" :space-evenly false
+    (box :class "time-container" :orientation "h" :space-evenly false :halign "center" :valign "center"
+      (label :class "content" :text "${lithour} ")
+      (label :class "content2" :text " : ")
+      (label :class "content" :text "${litmin}"))
+
+    (box :class "date-container" :orientation "h" :space-evenly true :halign "center"
+      (label :text "${completeday}"))
+))
+
+(defwidget cal []
+  (box :class "cal-box"
+       :orientation "v"
+       :space-evenly false
+    (calendar :class "cal"
+              :day {calendar_day ?: "1"}
+              :month {calendar_month ?: "1"}
+              :year {calendar_year ?: "2023"}
+    )
+  )
+)
+
+(defwidget date []
+  (box :class "date"
+       :orientation "v"
+       :space-evenly false
+    (time)
+    (cal)
+  )
+)
+
+(defwidget hoverlost []
+(eventbox
+    :onhoverlost "~/eww/target/release/eww -c  ~/.config/eww/ open --toggle controlpanel"
+    (launchermenu)
+)
+)
+
+;; Windows ;;
+
+(defwindow controlpanel
+    :geometry (geometry :x "-5px" :y "35px" :anchor "top right")
+    :wm-ignore false
+    (hoverlost))

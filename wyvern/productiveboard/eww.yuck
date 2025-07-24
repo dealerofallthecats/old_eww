@@ -1,0 +1,103 @@
+
+
+(defwidget task_single [?title ?status ?id]
+  (revealer :reveal { id != -121 }
+    :transition "slidedown"
+    (box :orientation "h"
+      :class "task_single_box"
+      :space-evenly false
+      (scroll :hexpand 'true' 
+          :hscroll 'true' 
+          :vscroll 'false' 
+          :width 345 
+          (label :halign 'start'
+            :style { status == "uncomplete" ? "" : "text-decoration: line-through; text-decoration-color: #dd7373; color: #dd7373;" }
+            :class 'task_single_box_title' 
+            :text "${title}"
+          )
+      )
+      (button :style { status == "uncomplete" ? "" : "color: #848585;"} :class "task_single_status_btn" :onclick "./wyvern/scripts/tasks.sh --set ${id}" :halign "end" "")
+      (button :class "task_single_remove_btn" :onclick "./wyvern/scripts/tasks.sh --remove ${id}" :halign "end" "󰆴")
+    )
+  )
+)
+
+(defvar new_task_name_input "")
+(defvar temp_input_value "")
+
+(defwidget tasksboxpb []
+  (box :orientation "v"
+    :space-evenly "false"
+    :spacing 10
+    :class "tasks-box-pb"
+    (label :class "tasks-box-label" :halign "start" :text "Tasks")
+    (scroll :height 420
+      :width 470
+	  (literal :content current_tasks)
+    )
+    (box :orientation "h"
+      :space-evenly false
+      (input :class "tasks-box-input" :value "${temp_input_value}"
+        :width 440 
+	    :onchange "$(which eww) update new_task_name_input=\"{}\""
+	    :onaccept "./wyvern/scripts/tasks.sh --add \"${new_task_name_input}\" && $(which eww) update temp_input_value=\"\""
+	  )
+	  (button :class "tasks-box-input-btn"
+	    :onclick "./wyvern/scripts/tasks.sh --add \"${new_task_name_input}\" && $(which eww) update temp_input_value=\"\""
+		""
+	  )
+    )
+  )
+)
+
+(defpoll whiteboard_content :interval "1s" "cat ~/whiteboard.txt")
+
+(defwidget whiteboardpb []
+  (box :orientation "v"
+    :class "whiteboard-box-pb"
+    (scroll :height 320
+      :width 470
+      :vscroll true
+      (box
+        (label :style "margin: 10px;"
+           :valign "start"
+           :halign "start"
+           :xalign 0
+           :wrap true
+           :markup notesmarkdown
+        )
+      )
+    )
+  )
+)
+
+(defwidget contentpb []
+  (box :orientation "v"
+    :space-evenly "false"
+    :class "pb-main-box"
+    :spacing 7
+    (whiteboardpb)
+    (tasksboxpb)
+  )
+)
+
+(defvar reveal_pb false)
+
+(defwindow productiveboard
+  :monitor 1 
+  :stacking "fg"
+  :windowtype "dock"
+  :wm-ignore false
+  :focusable true
+  :geometry (geometry :x "1.3%"
+              :y "-7.5%"
+              :width "1%"
+              :height "10%"
+              :anchor "bottom left")
+  ;;(revealer :transition "slideup"
+	;;:reveal reveal_pb
+	;;:duration "250ms"
+	;;(contentpb)
+  ;;)
+  (contentpb)
+)

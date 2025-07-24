@@ -1,0 +1,47 @@
+#!/bin/bash
+
+is_on() {
+  bluetoothctl show | grep 'PowerState' | tr -d 'PwerState: \t' | tail -c+2
+}
+
+toggle() {
+  if [[ "$(is_on)" == "on" ]]; then
+    bluetoothctl power off
+  else
+    bluetoothctl power on
+  fi
+}
+
+if [[ "$(is_on)" == "on" ]]; then
+  STATUS="On"
+  ICON="󰂯"
+else
+  STATUS="Off"
+  ICON="󰂲"
+fi
+
+if [[ "$STATUS" == "On" ]]; then
+  if [[ "$(bluetoothctl info | grep Alias)" ]]; then
+   special_raw="$(bluetoothctl info | grep Alias)"
+    IFS=' '
+    count=0
+    for section in $special_raw; do
+      if [[ "$count" == 0 ]]; then
+        count=1
+      else
+        device_name=$section
+      fi
+    done
+    SPECIAL="$device_name"
+  else
+    SPECIAL="Not connected"
+    ICON="󰂱"
+  fi
+else
+  SPECIAL="Turned Off"
+fi
+
+case "$1" in
+--info) echo "[\"$ICON\",\"$STATUS\",\"$SPECIAL\"]" ;;
+--toggle) toggle ;;
+esac

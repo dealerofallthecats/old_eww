@@ -1,0 +1,64 @@
+#!/bin/bash
+
+is_online() {
+  nmcli networking connectivity
+}
+
+toggle() {
+  if [[ "$(is_online)" == "limited" ]] || [[ "$(is_online)" == "full" ]]; then
+    nmcli networking off
+  else
+    if [[ $(nmcli c show --active | grep lo) ]]; then
+      nmcli networking off
+    else
+      nmcli networking on
+    fi
+  fi
+}
+
+if [[ "$(is_online)" == "limited" ]] || [[ "$(is_online)" == "full" ]]; then
+  STATUS="On"
+  ICON="󰤨"
+else
+  STATUS="Off"
+  ICON="󰤭"
+fi
+
+if [[ "$STATUS" == "On" ]]; then
+     raw_line_num="$(nmcli c show --active | grep -n lo)"
+     IFS=':'
+     count=0
+     for part in $raw_line_num; do
+       if [[ "$part" == *"lo"* ]]; then
+         continue
+       else
+         line_num=$part
+       fi
+     done
+     special_raw_two="$(nmcli c show --active)"
+     final_raw=$(echo $special_raw_two | sed -e "${line_num}d" | tail -1)
+     IFS=' '
+     counttwo=0
+     for part in $final_raw; do
+       if [[ "$counttwo" == 0 ]]; then
+         ssid=$part
+         counttwo=$((counttwo + 1))
+       else
+         continue
+       fi
+     done
+     SPECIAL="$ssid"
+else
+  if [[ $(nmcli c show --active | grep lo) ]]; then
+    SPECIAL="Disconnected"
+    ICON="󰤩"
+    STATUS="On"
+  else
+    SPECIAL="Turned Off"
+  fi
+fi
+
+case "$1" in
+--info) echo "[\"$ICON\",\"$STATUS\",\"$SPECIAL\"]" ;;
+--toggle) toggle ;;
+esac

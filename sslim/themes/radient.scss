@@ -1,0 +1,38 @@
+// Accents (bright)
+$red: #DB8E7C;
+$blue: #7CB5DB;
+$green: #97DB7C;
+$yellow: #DBD37C;
+$orange: #DBBA7C;
+$purple: #9E7CDB;
+$pink: #D87CDB;
+$turquoise: #7CDBD6;
+
+// Accents (dull)
+$red-dull: #DBBBB4;
+$blue-dull: #B4B6DB;
+$green-dull: #B4DBC0;
+$yellow-dull: #D9DBB4;
+$orange-dull: #DBD0B4;
+$purple-dull: #D3B4DB;
+$pink-dull: #DBB4D2;
+$turquoise-dull: #B4DBDB;
+
+// Accent import
+@import "/home/catdealer/.config/eww/accent.scss"
+//$accent: #7ba5dd;
+
+// Main colours
+
+$bg: #C5C8C9;
+$bg-alt: #babebf;
+$bg-alt-two: #aeb3b5;
+$bg-alt-three: #a1a7a9;
+$bg-alt-four: #9ca2a4;
+$bg-alt-five: #919799;
+$bg-alt-six: #868c8f;
+$fg: #000000;
+$disab: #5e5e5e;
+
+// Corner rounding
+$crounding: 0px;

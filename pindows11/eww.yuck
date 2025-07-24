@@ -1,0 +1,4 @@
+(include "./pindows11/bar/eww.yuck")
+(include "./pindows11/quicksettings/eww.yuck")
+(include "./pindows11/widgets/eww.yuck")
+(include "./pindows11/launcher/eww.yuck")

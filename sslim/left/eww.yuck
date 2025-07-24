@@ -1,0 +1,131 @@
+
+(defvar revealleftbtn false)
+
+(defwindow leftbutton
+  :monitor 0 
+  :stacking "fg"
+  :windowtype "dock"
+  :wm-ignore false
+  :geometry (geometry :x "0%"
+              :y "0%"
+              :width "10px"
+              :height "10%"
+              :anchor "center left")
+   (eventbox :onhover "$(which eww) update revealleftbtn=true"
+     :onhoverlost "$(which eww) update revealleftbtn=false"
+     (revealer :reveal revealleftbtn
+       :transition "crossfade"
+       (button :class "leftbutton-btn"
+         :halign "start"
+         :onclick "./sslim/scripts/open_left.sh & $(which eww) update revealleftbtn=false"
+         "ii"
+       )
+     )
+   )
+)
+
+(defwidget tool_single [?status ?tooltip ?icon ?exec ?name ?special]
+(box :orientation "v"
+        :space-evenly true 
+        :spacing 2
+        :class "tools-main"
+  (eventbox :class { status != "Off" ? "tool-btn-ani tool-btn" : "tool-btn-ani no-tool-btn" }
+          :width 50
+          :height 50
+          :halign "start"
+          :cursor "pointer"
+          :tooltip "${tooltip}"
+          (button :class "tool-button"
+            :onclick "${exec}"
+            (box :orientation "h"
+              :space-evenly false
+              :spacing 10
+              (label :halign "start" :style { name != "Network" ? ( name != "Bluetooth" ? "margin-left: .7em; font-size: 1.4em;" : "margin-left: .8em; margin-right: 0em; font-size: 1.3em;" ) : "margin-left: .9em; margin-right: .2em; font-size: 1.1em;" } :text "${icon}")
+	        (label :class "tool-btn-text" :style "margin-right: .1em; font-size: 1.2em;" :halign "end" :text "")
+            )
+          )
+  )
+  )
+)
+
+(defwidget tool_single_large [?status ?tooltip ?icon ?exec ?name ?special]
+(box :orientation "v"
+        :space-evenly true 
+        :spacing 2
+        :class "tools-main"
+  (eventbox :class { status != "Off" ? "tool-btn-ani tool-btn" : "tool-btn-ani no-tool-btn" }
+          :width 50
+          :height 50
+          :halign "start"
+          :cursor "pointer"
+          :tooltip "${tooltip}"
+          (button :class "tool-button"
+            :onclick "${exec}"
+            (box :orientation "h"
+              :space-evenly false
+              :spacing 10
+              (label :halign "start" :style { name != "Network" ? ( name != "Bluetooth" ? "margin-left: .5em; font-size: 1.4em;" : "margin-left: .6em; margin-right: 0em; font-size: 1.3em;" ) : "margin-left: .7em; margin-right: 0em; font-size: 1.1em;" } :text "${icon}")
+              (scroll :hscroll false :vscroll false
+                  :width 150
+                  (box :orientation "v"
+                    :class "tool-button-text"
+                    :space-evenly false
+                    :valign "center"
+                    :spacing 5
+                    (label :halign "start" :class "tool-btn-text" :style "font-weight: 600;" :text "${name}")
+                    (label :halign "start" :class "tool-btn-text" :text { name != "Network" ? ( name == "Bluetooth" ? "${special}" : ( status != "Off" ? "Turned On" : "Turned Off" )) : "${special}" })
+                  )
+              )
+	        (label :class "tool-btn-text" :style "margin-right: .4em; font-size: 1.2em;" :halign "end" :text "")
+            )
+          )
+  )
+  )
+)
+
+(defvar leftwidget-revealbig 0)
+
+(defwindow leftwidget
+  :monitor 0 
+  :stacking "bg"
+  :windowtype "dock"
+  :wm-ignore false
+  :geometry (geometry :x "0%"
+              :y "0%"
+              :width "5%"
+              :height "94.5%"
+              :anchor "center left")
+   (box :class "leftwidget-main"
+     :orientation "h"
+     :space-evenly false
+     (eventbox :onrightclick "$(which eww) update leftwidget-revealbig=1; bspc config left_padding 290"
+		:onhoverlost "./sslim/scripts/open_left.sh & $(which eww) update leftwidget-revealbig=0"
+		(stack :selected leftwidget-revealbig
+		  :transition "slideleft"
+		  :same-size false
+		  (box :class "leftwidget-main-two"
+		    :orientation "v"
+		    :spacing 20
+		    (tool_single :status "${net_info[1]}" :tooltip "Wifi toggle" :icon "${net_info[0]}" :exec "./fibreglass/scripts/fb.out --toggleNetwork &" :name "Network" :special "${net_info[2]}")
+            (tool_single :status "${blue_info[1]}" :tooltip "Bluetooth toggle" :icon "${blue_info[0]}" :exec "./fibreglass/scripts/fb.out --toggleBluetooth &" :name "Bluetooth" :special "${blue_info[2]}")
+            (tool_single :status "${night_info[1]}" :tooltip "Nightmode toggle" :icon "${night_info[0]}" :exec "./fibreglass/scripts/Nightmode --toggle &" :name "Nightmode" :special "")
+            (tool_single :status { notifications.dnd == "false" ? "Off" : "On" } :tooltip "DND toggle" :icon { notifications.dnd == "false" ? "󰂚" : "󰂛" } :exec "./fibreglass/scripts/notifManage --toggle &" :name "Do Not Disturb" :special "")
+            (tool_single :status { notifications.dnd == "false" ? "Off" : "On" } :tooltip "DND toggle" :icon { notifications.dnd == "false" ? "󰂛" : "󰂚" } :exec "./fibreglass/scripts/notifManage --toggle &" :name "Do Not Disturb" :special "")
+            (tool_single :status { notifications.dnd == "false" ? "Off" : "On" } :tooltip "DND toggle" :icon { notifications.dnd == "false" ? "󰂛" : "󰂚" } :exec "./fibreglass/scripts/notifManage --toggle &" :name "Do Not Disturb" :special "")
+            (tool_single :status { notifications.dnd == "false" ? "Off" : "On" } :tooltip "DND toggle" :icon { notifications.dnd == "false" ? "󰂛" : "󰂚" } :exec "./fibreglass/scripts/notifManage --toggle &" :name "Do Not Disturb" :special "")
+		  )
+		  (box :class "leftwidget-main-two"
+		    :orientation "v"
+		    :spacing 20
+		    (tool_single_large :status "${net_info[1]}" :tooltip "Wifi toggle" :icon "${net_info[0]}" :exec "./fibreglass/scripts/fb.out --toggleNetwork &" :name "Network" :special "${net_info[2]}")
+            (tool_single_large :status "${blue_info[1]}" :tooltip "Bluetooth toggle" :icon "${blue_info[0]}" :exec "./fibreglass/scripts/fb.out --toggleBluetooth &" :name "Bluetooth" :special "${blue_info[2]}")
+            (tool_single_large :status "${night_info[1]}" :tooltip "Nightmode toggle" :icon "${night_info[0]}" :exec "./fibreglass/scripts/Nightmode --toggle &" :name "Nightmode" :special "")
+            (tool_single_large :status { notifications.dnd == "false" ? "Off" : "On" } :tooltip "DND toggle" :icon { notifications.dnd == "false" ? "󰂚" : "󰂛" } :exec "./fibreglass/scripts/notifManage --toggle &" :name "Do Not Disturb" :special "")
+            (tool_single_large :status { notifications.dnd == "false" ? "Off" : "On" } :tooltip "DND toggle" :icon { notifications.dnd == "false" ? "󰂛" : "󰂚" } :exec "./fibreglass/scripts/notifManage --toggle &" :name "Do Not Disturb" :special "")
+            (tool_single_large :status { notifications.dnd == "false" ? "Off" : "On" } :tooltip "DND toggle" :icon { notifications.dnd == "false" ? "󰂛" : "󰂚" } :exec "./fibreglass/scripts/notifManage --toggle &" :name "Do Not Disturb" :special "")
+            (tool_single_large :status { notifications.dnd == "false" ? "Off" : "On" } :tooltip "DND toggle" :icon { notifications.dnd == "false" ? "󰂛" : "󰂚" } :exec "./fibreglass/scripts/notifManage --toggle &" :name "Do Not Disturb" :special "")
+		  )
+		)
+     )
+   )
+)

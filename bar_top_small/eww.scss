@@ -1,0 +1,112 @@
+
+
+.ws {
+	font-size: 1.1em;
+	margin: .5em .5em .0em;
+	padding: .5em .5em;
+	border-radius: $crounding;
+  background-color: $bg;
+
+  .wso {
+    background-color: $bg;
+    margin: .1em .5em;
+	  padding: .5em .5em;
+	  border-radius: $crounding;
+    color: $accent;
+  }
+  .wsf {
+    background-color: $bg;
+    margin: .1em .5em;
+    padding: .5em .5em;
+	  border-radius: $crounding; 
+    color: $fg;
+  }
+  .ws {
+    background-color: $bg;
+    margin: .1em .5em;
+	  padding: .5em .5em;
+	  border-radius: $crounding;
+    color: $bg-alt;
+  }
+}
+
+.bar-main-box-top-small {
+  background-color: $bg;
+  border-radius: $crounding;
+}
+
+.systemtray-top {
+  margin: .0em 1em .0em;
+  padding: .25em .25em;
+  border-radius: $crounding;
+  background-color: $bg;
+  font-size: 1.1em;
+}
+
+.systemtray-top-two menu {
+  padding: .3em;
+  background-color: $bg;
+  border-radius: $crounding;
+  >menuitem {
+    padding: .3em;
+    background-color: $bg;
+    border-radius: $crounding;
+    color: $fg;
+    margin: .3em;
+
+    &:disabled {
+      color: $disab;
+    }
+  }
+  * {
+    border-radius: $crounding;
+  }
+} 
+
+.weather-box-top {
+  margin: .0em .5em .0em;
+  padding: .3em;
+  padding-left: .5em;
+  border-radius: $crounding;
+  background-color: $bg;
+  font-size: 1.1em;
+  color: $fg;
+
+  .weather-icon-top {
+    font-size: 1.6em;
+    margin-left: .2em;
+  }
+  
+  .weather-box-detail-top {
+    margin-left: .1em;
+    margin-right: .5em;
+  }
+
+}
+
+.time-statuses-bar-top-small {
+  margin: .0em .5em .0em;
+  padding: .25em .25em;
+  border-radius: $crounding;
+  background-color: $bg;
+  font-size: 1.1em;
+  color: $fg;
+  font-weight: 600;
+
+  button {
+    color: $fg;
+    background-color: $bg;
+    font-weight: 600;
+    border-radius: $crounding;
+    padding: .3em;
+    padding-left: .5em;
+    padding-right: .5em;
+  }
+
+  button:hover {
+    background-color: $bg-alt-two;
+  }
+}
+
+
+

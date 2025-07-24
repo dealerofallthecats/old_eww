@@ -1,0 +1,40 @@
+#!/bin/bash
+
+artist=""
+song=""
+
+playpause () {
+	if [[ "$(mpc status)" == *"[playing]"* ]]; then
+		echo ""
+	else
+		echo ""
+	fi
+}
+
+gettitle () {
+	status=$(mpc -f %title% current)
+	if [[ "$(echo \"${status:-NoPlaying}\")" = "\"NoPlaying\"" ]]; then
+		echo "No media playing"
+	else
+		if [[ $(mpc -f %artist% current) = ""  ]]; then
+			artist="Unknown Artist"
+		else
+			artist=$(mpc -f %artist% current)
+		fi
+
+		if [[ $(mpc -f %title% current) = "" ]]; then
+			song="Unknown Song"
+		else
+			song=$(mpc -f %title% current)
+		fi
+
+		echo "$song - $artist"
+
+	fi
+	
+}
+
+case $1 in
+	playpause) playpause ;;
+	title) gettitle ;;
+esac

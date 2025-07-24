@@ -1,0 +1,155 @@
+
+(defpoll time-top :interval "1s" "date '+%I:%M %p'")
+
+(defpoll battery-top :interval "3s" "./bar_top/scripts/battery &")
+(defpoll volume-top :interval "100ms" "amixer get Master | grep -oP '\\d+%' | head -1 | tr -d '%'")
+(defpoll brightness-top :interval "100ms" "brightnessctl i | grep -oP '(\\d+%)' | tr -d '% '")
+
+(defpoll powermode-state-top :interval "1s" "./bar_top/scripts/powermode --state &")
+
+(defpoll wifi_icon_top :interval "200ms" "./bar_top/scripts/Network &")
+(defpoll bluetooth_icon_top :interval "200ms" "./bar_top/scripts/Bluetooth &")
+
+(defpoll weather-top-temp :interval "3s" "./bar_top/scripts/weather.sh Auckland --temp")
+(defpoll weather-top-cond :interval "3s" "./bar_top/scripts/weather.sh Auckland --cond")
+(defpoll weather-top-icon :interval "3s" "./bar_top/scripts/weather.sh Auckland --icon")
+
+(deflisten workspaces-script-top "./bar_top/scripts/workspaces")
+(defwidget workspaces_top []
+  (literal :content workspaces-script-top)
+)
+
+(defwidget quicksettings_top []
+  (button :onclick "bash ./bar_top/scripts/open_dashboard.sh &"
+    (box :orientation "h"
+      :halign "right"
+      :height "70"
+      :spacing "5"
+      :class "quicksettings-bar-top"
+      (label :text "${wifi_icon_top}  ${bluetooth_icon_top}   ${time-top}" )
+    )
+  )
+)
+
+(defwidget weather_top []
+  (box :orientation "h"
+    :space-evenly "false"
+    :class "weather-box-top"
+    :height "40"
+    (box :orientation "h"
+      :space-evenly "false"
+      :spacing 7
+      (label :halign "start" :class "weather-icon-top" :text "${weather-top-icon}")
+      (box :orientation "v"
+        :space-evenly "false"
+        :valign "center"
+        :class "weather-box-detail-top"
+        (label :halign "start" :text "${weather-top-temp}")
+        (label :halign "start" :text "${weather-top-cond}")
+      )
+    )
+  )
+)
+
+(defwidget statuses_top []
+  (box :orientation "h"
+    :class "statuses-top"
+    :space-evenly "false"
+    :halign "center"
+    (label :text " ${brightness-top}       ${volume-top}      ${battery-top}") 
+  )
+)
+
+
+(defwidget screenshot_top []
+  (box :orientation "h"
+    :class "screenshot-top"
+    :valign "center"
+    :halign "center"
+    :height "53"
+    :width "60"
+    (button :style "padding-right: 13px;" :onclick "./bar_top/scripts/screenshot.sh &" "")
+  )  
+)
+
+(defwidget xkill_top []
+  (box :orientation "h"
+    :class "xkill-top"
+    :valign "center"
+    :halign "center"
+    :height "53"
+    :width "60"
+    (button :style "padding-right: 13px;" :onclick "xkill &" "󰱝")
+  )  
+)
+
+
+(defwidget systemtray_top []
+  (box :orientation "h"
+    :class "systemtray-top"
+    :valign "center"
+    :halign "right"
+    (systray :orientation "h"
+      :class "systemtray-top-two"
+      :icon-size "20"
+      :spacing "10"
+      :prepend-new true
+    )
+  )
+)
+
+(defwindow bar_top
+  :monitor 0
+  :geometry (geometry :x "0px"
+    :y "0px"
+    :width "100%"
+    :height "6.5%"
+    :anchor "top center"
+    )
+  :stacking "fg"
+  :windowtype "dock"
+  :wm-ignore false 
+  (box :orientation "h"
+    :class "bar-main-box-top"
+    (box :orientation "h"
+      :halign "start"
+      :space-evenly "false"
+      (weather_top)
+    )
+    (box :orientation "h"
+      :halign "center"
+      :space-evenly "false"
+      (statuses_top)
+      (workspaces_top)
+      (screenshot_top)
+      (xkill_top)
+    )
+    (box :orientation "h"
+      :halign "end"
+      :space-evenly "false"
+      :spacing "2"
+      :class "end-box-top"
+      (systemtray_top)
+      (label :class "seperator-top"
+        :text "  "
+      )
+      (quicksettings_top)
+    )
+  )
+)
+
+(defwindow fakecornerstop
+  :monitor 0
+  :geometry (geometry :x "0px"
+    :y "6.5%"
+    :width "100%"
+    :height "9%"
+    :anchor "top center"
+  )
+  :windowtype "desktop"
+  :stacking "bg"
+  :wm-ignore "false"
+  (box
+    :class "fakecornerstops"
+  )
+)

@@ -1,0 +1,26 @@
+
+
+(defvar revealrightbtn false)
+
+(defwindow rightbutton
+  :monitor 0 
+  :stacking "fg"
+  :windowtype "dock"
+  :wm-ignore false
+  :geometry (geometry :x "0%"
+              :y "0%"
+              :width "10px"
+              :height "10%"
+              :anchor "center right")
+   (eventbox :onhover "$(which eww) update revealrightbtn=true"
+     :onhoverlost "$(which eww) update revealrightbtn=false"
+     (revealer :reveal revealrightbtn
+       :transition "crossfade"
+       (button :class "rightbutton-btn"
+         :halign "end"
+         :onclick "notify-send hello helo"
+         "ii"
+       )
+     )
+   )
+)

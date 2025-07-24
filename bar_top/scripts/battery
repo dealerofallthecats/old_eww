@@ -1,0 +1,29 @@
+#!/bin/bash
+
+battery=$(cat /sys/class/power_supply/BAT0/capacity)
+battery_full=""
+
+if [[ "$battery" -lt "100" ]]; then
+  if [[ "$battery" -lt "80" ]]; then
+    if [[ "$battery" -lt "60" ]]; then
+      if [[ "$battery" -lt "40" ]]; then
+        if [[ "$battery" -lt "20" ]]; then
+          echo "20"
+          battery_full="󰁻 $battery"
+        else
+          battery_full="󰁼 $battery"
+        fi
+      else
+        battery_full="󰁽 $battery"
+      fi
+    else
+      battery_full="󰁿 $battery"
+    fi
+  else
+    battery_full="󰂁 $battery"
+  fi
+else
+  battery_full="󰁹 $battery"
+fi
+
+printf "%s\n" "$battery_full"

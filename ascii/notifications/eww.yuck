@@ -1,0 +1,95 @@
+
+(defwidget notification_single_popup [?title ?content ?image ?id ?time ?actions]
+(revealer :reveal { id != -121 }
+  :transition "slidedown"
+  (eventbox :onclick "./fibreglass/scripts/notifManage --dismiss ${id}"
+  (box :orientation "v"
+    :space-evenly false 
+    :class "notif_box"
+    :spacing 5
+    (box :orientation "h"
+      :space-evenly false
+    (box :style "background-image: url('${image}');"
+      :class "notif_image"
+      :space-evenly false
+      :vexpand false
+      :halign "start"
+      :valign "center"
+    )
+    (box :orientation "v"
+      :space-evenly false
+      (box :orientation "h" 
+        :space-evenly false 
+        (scroll :hexpand true 
+          :hscroll true 
+          :vscroll false
+          :width 310 
+          (label :halign "start"
+            :xalign 0 
+            :limit-width 22
+            :valign { content == "" ? "center" : "start" }
+            :class "notif_sum" 
+            :text "${title}"
+          )
+        )
+        (label :class "notif_time" :halign "end" :text "${time}")
+        (button :halign "end"
+          :class "notif_box_clear"
+          :onclick "./fibreglass/scripts/notifManage --dismiss ${id}"
+          "󰅖"
+        )
+      )
+      (label :wrap true 
+        :halign "start"
+        :vexpand true
+        :class "notif_body"
+        :text "${content}"
+      )
+    )
+  )
+  (box :orientation "h"
+    :vexpand true
+    :spacing 8
+    :class "notif_buttons"
+    (for action in {actions}
+      (button :onclick "./fibreglass/scripts/notifManage --action ${id} ${action[0]} && ./fibreglass/scripts/notifManage --close ${id}" "${action[1]}")
+    )
+  )
+  )
+  )
+ )
+)
+
+(defwindow currentnotificationsbox []
+  :monitor 0
+  :geometry (geometry :x "0%"
+    :y "3.55%"
+    :width "0%"
+    :height "0%"
+    :anchor "top right"
+  )
+  :stacking "fg"
+  :exclusive false
+  (eventbox 
+    :onhoverlost { arraylength(notifications.popups) > 0 ? "" : "$(which eww) close currentnotificationsbox && $(which eww) open currentnotificationsbox --screen 0" }
+	(revealer :transition "slidedown"
+		:hexpand true
+		:reveal {arraylength(notifications.popups) > 0}
+		(box :orientation "h" :class "current_notif_box"
+			(box :orientation "v" 
+				:space-evenly false
+				(for notif in {[0, 1, 2, 3, 4]}
+					(notification_single_popup
+						:title { notif < arraylength(notifications.popups) ? notifications.popups[notif].summary : "" }
+						:content { notif < arraylength(notifications.popups) ? ( notifications.popups[notif].body == "null" ? "" : notifications.popups[notif].body ) : "" }
+						:image { notif < arraylength(notifications.popups) ? ( notifications.popups[notif].image == "null" ? "./fibreglass/assets/notification_icon.png" : notifications.popups[notif].image ) : "" }
+						:id { notif < arraylength(notifications.popups) ? notifications.popups[notif].id : -121 }
+						:time { notif < arraylength(notifications.popups) ? notifications.popups[notif].time : "" }
+						:actions { notif < arraylength(notifications.popups) ? notifications.popups[notif].actions : [] }
+					)
+				)
+			)
+		)
+	)
+  )
+)

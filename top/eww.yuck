@@ -1,0 +1,107 @@
+
+(defvar revealquicksettings 0)
+(defvar revealquicksettingcontent 0)
+
+;; Music controls 
+(defpoll music-cover :interval "1s" "./top/scripts/music --cover")
+(defpoll music-title :interval "1s" "./top/scripts/music --title")
+(defpoll music-artist :interval "1s" "./top/scripts/music --artist")
+(defpoll playing-icon :interval "500ms" "./top/scripts/music --playing-icon")
+
+(deflisten workspaces-script-top "./top/scripts/workspaces")
+(defwidget workspaces_top []
+  (literal :content workspaces-script-top)
+)
+
+(defwidget musicboxtop []
+  (box :orientation "h"
+    :halign "center"
+    :class "music-box-top"
+    :space-evenly "false"
+    (box :style "background-image: url('${music-cover}')"
+        :class "music-cover-db"
+        :halign "start"
+        :valign "center"
+    )
+    (label :class "music-text"
+      :text "${music-artist}   ${music-title}"
+    )
+    (button :class "music-play-button"
+      :onclick "./top/scripts/music --toggle &"
+      "${playing-icon}"
+    )
+  )
+)
+
+(defwidget quicksettingsbuttons []
+  (box :orientation "h"
+    (button :onclick "~/eww-source/target/release/eww update revealquicksettingcontent=1"
+      :class "quicksettingsbutton"
+      "󰝚"
+    )
+    (button :onclick ""
+      :class "quicksettingsbutton"
+      ""
+    )
+    (button :onclick ""
+      :class "quicksettingsbutton"
+      "󰄨"
+    )
+    (button :onclick "~/eww-source/target/release/eww update revealquicksettingcontent=2"
+      :class "quicksettingsbutton"
+      ""
+    )
+  )
+)
+
+(defwidget systemtraytop []
+  (box :orientation "h"
+    :class "systemtray-top"
+    :valign "center"
+    :halign "right"
+    (systray :orientation "h"
+      :class "systemtray-top-two"
+      :icon-size "20"
+      :spacing "10"
+      :prepend-new true
+    )
+  )
+)
+
+(defwindow bar_top
+  :monitor 0
+  :geometry (geometry :x "0px"
+    :y "1%"
+    :width "10%"
+    :height "5%"
+    :anchor "top center"
+    )
+  :stacking "fg"
+  :windowtype "dock"
+  :wm-ignore false 
+  (box :orientation "h"
+    :class "bar-main-box-top"
+    (box :orientation "h"
+      :halign "center"
+      :space-evenly "false"
+      (stack :transition "slidedown"
+        :selected revealquicksettings
+        :same-size true 
+        (workspaces_top)
+        (eventbox :onhoverlost "~/eww-source/target/release/eww update revealquicksettings=0 && ~/eww-source/target/release/eww update revealquicksettingcontent=0"
+          :halign "center"
+          (box :orientation "h"
+            (stack :transition "slidedown"
+              :selected revealquicksettingcontent
+              :same-size true 
+              (quicksettingsbuttons)
+              (musicboxtop)
+              (systemtraytop)
+              "sdjkfahsjkdfhkasdjlhfkljasdhfklhkhk"
+            )
+          )
+        )
+      )
+    )
+  )
+)

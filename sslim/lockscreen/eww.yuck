@@ -1,0 +1,69 @@
+
+
+
+
+
+(defwindow timelock
+  :monitor 0
+  :geometry (geometry :x "0%"
+    :y "-10%"
+    :width "5%"
+    :height "3%"
+    :anchor "center"
+  )
+  :stacking "fg"
+  (box :orientation "v"
+    :space-evenly false
+    :spacing 2
+    (label :class "time-lock" :text "${time-hour}:${time-min} ${time-pmam}")
+    (label :class "date-lock" :text "${daylong}.")
+  )
+)
+
+(defwindow medialock 
+  :monitor 0
+  :geometry (geometry :x "4%"
+    :y "-5%"
+    :width "0%"
+    :height "0%"
+    :anchor "bottom left"
+  )
+  :stacking "fg"
+  (revealer :reveal { music-title != "No media playing" }
+    :transition "crossfade"
+  (box :orientation "h"
+    :space-evenly false
+    :spacing 2
+    (box :style "background-image: url('${music-cover}');"
+        :class "music-cover-lock"
+        :halign "start"
+        :valign "center"
+    )
+    (box :orientation "v"
+      :space-evenly false
+      :spacing 2
+      :valign "center"
+      :class "music-titles-box-lock"
+      (label :class "music-title-lock" :halign "start" :text music-title)
+      (label :class "music-artist-lock" :halign "start" :text music-artist)
+    )
+  )
+  )
+)
+
+(defwindow statuseslock
+  :monitor 0
+  :geometry (geometry :x "-4%"
+    :y "-5%"
+    :width "0%"
+    :height "0%"
+    :anchor "bottom right"
+  )
+  :stacking "fg"
+  (box :orientation "h"
+    :space-evenly false
+    :spacing 35
+(label :class { net_info[0] != "󰤨" ? ( net_info[0] != "󰤩" ? "info-label-disab-lock" : "info-label-lock" ) : "info-label-lock" } :text "${net_info[0]}")
+      (label :class { blue_info[0] != "󰂯" ? ( blue_info[0] != "󰂱" ? "info-label-disab-lock" : "info-label-lock" ) : "info-label-lock" } :text "${blue_info[0]}")
+  )
+)

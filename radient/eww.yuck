@@ -1,0 +1,16 @@
+
+
+;; Notifications
+(deflisten notifications :initial '{
+    "count": 0,
+    "dnd": false,
+    "notifications": [],
+    "popups": []
+    }'
+    "./radient/scripts/notifCatch.py"
+)
+
+(include "./radient/bar/eww.yuck")
+(include "./radient/dashboard/eww.yuck")
+(include "./radient/keepopen/eww.yuck")
+(include "./radient/notifications/eww.yuck")

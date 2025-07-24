@@ -1,0 +1,327 @@
+
+
+
+(defwidget topdb []
+  (box :orientation "v"
+    :space-evenly false
+    :vexpand false 
+    :spacing 17
+    :width 120
+    :class "top-box-db"
+    (box :orientation "h" 
+      :space-evenly "false"
+      :spacing 10
+      :class "top-box-db-two"
+      :halign "start"
+      :valign "center"
+      (box :style "background-image: url('${PFP}');"
+        :class "image-pfp-das"
+        :halign "start"
+        :valign "center"
+      )
+      (box :orientation "v"
+        :space-evenly "false"
+        :spacing 1
+        :valign "center"
+        :halign "start"
+        :class "user-greeting-box"
+        (label :halign "start" :class "user-greeting" :text "${user_name}") 
+        (label :halign "start" :class "uptime-text" :text "Up: ${uptime}")
+      )
+      (box :orientation "h"
+        :halign "center"
+        :class "power-box-db"
+        (button :class "power-box-button-db" 
+          :onclick "$HOME/scripts/tools/lockbspwm &"
+          "󰌾"
+        )
+        (button :class "power-box-button-db" 
+          :onclick "$HOME/scripts/tools/lockbspwm --suspend &"
+          "󰤄"
+        )
+        (button :class "power-box-button-db" 
+          :onclick "bspc quit"
+          "󰗽"
+        )
+        (button :class "power-box-button-dan-db" 
+          :onclick "systemctl poweroff"
+          ""
+        )
+      )
+    )
+  )
+)
+
+
+(defwidget tool_single [?status ?tooltip ?icon ?exec ?name ?special]
+(box :orientation "v"
+        :space-evenly true 
+        :spacing 2
+        :class "tools-main"
+  (eventbox :class { status != "Off" ? "tool-btn-ani tool-btn" : "tool-btn-ani no-tool-btn" }
+          :width 90
+          :height 50
+          :halign "start"
+          :cursor "pointer"
+          :tooltip "${tooltip}"
+          (button :class "tool-button"
+            :onclick "${exec}"
+            (box :orientation "h"
+              :space-evenly false
+              :spacing 10
+              (label :halign "start" :style { name != "Network" ? ( name != "Bluetooth" ? "margin-left: .5em;" : "margin-left: .7em; margin-right: 0em; font-size: .9em;" ) : "margin-left: .5em; margin-right: .3em; font-size: .9em;" } :text "${icon}")
+              (scroll :hscroll false :vscroll false
+                  (box :orientation "v"
+                    :class "tool-button-text"
+                    (label :halign "start" :class "tool-btn-text" :style "font-weight: 600;" :text "${name}")
+                    (label :halign "start" :class "tool-btn-text" :text { name != "Network" ? ( name == "Bluetooth" ? "${special}" : ( status != "Off" ? "Turned On" : "Turned Off" )) : "${special}" })
+                  )
+              )
+	        (label :class "tool-btn-text" :style "margin-right: .5em; font-size: .8em;" :halign "end" :text "")
+            )
+          )
+  )
+  )
+)
+
+(defwidget toolsdb []
+  (box :orientation "v"
+    :class "tools-sec"
+    :spacing 15
+    (box :orientation "h"
+      :spacing 15
+      (tool_single :status "${net_info[1]}" :tooltip "Wifi toggle" :icon "${net_info[0]}" :exec "./wyvern/scripts/Network --toggle &" :name "Network" :special "${net_info[2]}")
+      (tool_single :status "${blue_info[1]}" :tooltip "Bluetooth toggle" :icon "${blue_info[0]}" :exec "./wyvern/scripts/Bluetooth --toggle &" :name "Bluetooth" :special "${blue_info[2]}")
+      )
+    (box :orientation "h"
+      :spacing 15
+      (tool_single :status "${night_info[1]}" :tooltip "Nightmode toggle" :icon "${night_info[0]}" :exec "./wyvern/scripts/Nightmode --toggle &" :name "Nightmode" :special "")
+      (tool_single :status { notifications.dnd == "false" ? "Off" : "On" } :tooltip "DND toggle" :icon { notifications.dnd == "false" ? "󰂛" : "󰂚" } :exec "./wyvern/scripts/notifManage --toggle &" :name "Do Not Disturb" :special "")
+    )
+  )
+)
+
+(defwidget slidersdb []
+  (box :orientation "v"
+    :space-evenly "false"
+    :spacing 10
+    :class "sliders-box"
+    (box :orientation "v"
+      :space-evenly "false"
+      (label :halign "start" :class "sliders-text" :text "Volume")
+      (scale :min 0
+        :max 101
+        :class "sliders-volume-db"
+        :orientation "h"
+        :value sliders-volume
+        :width 400
+        :height 10
+        :marks true
+        :tooltip "Volume: ${sliders-volume}%"
+        :onchange "amixer set Master {}%"
+      )
+    )
+    (box :orientation "v"
+      :space-evenly "false"
+      (label :halign "start" :class "sliders-text" :text "Brightness")
+      (scale :min 0
+        :max 101
+        :class "sliders-brightness-db"
+        :orientation "h"
+        :value sliders-brightness
+        :width 400
+        :height 10
+        :marks true
+        :tooltip "Brightness: ${sliders-brightness}%"
+        :onchange "brightnessctl set {}%"
+      )
+    )
+  )
+)
+
+
+(defwidget musicboxdb []
+  (box :orientation "v"
+    :space-evenly "false"
+    :class "music-box-db"
+    (box :orientation "h"
+      :class "music-box-two-db"
+      :spacing 9
+      :space-evenly "false"
+      (overlay
+        (box :style "background-image: linear-gradient(to bottom, rgba(16, 16, 18, 0.3), rgba(0, 0, 0, 0)), linear-gradient(to top, rgba(16, 16, 18, 0.7), rgba(0, 0, 0, 0)), url('${music-cover}');"
+            :class "music-cover-db"
+            :halign "start"
+            :valign "center"
+        )
+        ;;(revealer :transition "crossfade"
+          ;;:reveal { music-playingvia != "" }
+        ;;(box :orientation "h"
+          ;;:halign "start"
+          ;;:valign "start"
+          ;;:spacing 0
+          ;;:space-evenly false
+          ;;(label :class "music-playingvia" :text "Playing by: ")
+          ;;(label :class "music-playingvia-two" :text music-playingvia)
+        ;;)
+        ;;)
+        (box :orientation "v"
+          :width 220
+          :space-evenly "false"
+          :spacing 7
+          :halign "start"
+          :valign "end"
+          :style "margin-left: .7em; margin-bottom: 1em;"
+          (scroll :hscroll "true"
+            :vscroll "false"
+            :width 380
+            (label :halign "start" :class "music-title" :text music-title)
+          )
+          (label :halign "start" :class "music-artist" :text music-artist)
+        )
+      )
+      (box :orientation "v"
+        :class "music-buttons-box"
+        (eventbox :cursor "pointer"
+          (button :halign "center" :valign "end" :class "music-nextback-button" 
+            :onclick "./wyvern/scripts/music --back &"
+			:style "background-image: url('${music-back-icon}')"
+		  )
+        )
+        (eventbox :cursor "pointer"
+          (button :halign "center" :valign "end" :class "music-play-button" 
+            :onclick "./wyvern/scripts/music --toggle &"
+            :style "background-image: url('${playing-icon}');"
+          )
+        )
+        (eventbox :cursor "pointer"
+          (button :halign "center" :valign "end" :class "music-nextback-button" 
+            :onclick "./wyvern/scripts/music --next &"
+            :style "background-image: url('${music-next-icon}')"
+          )
+        )
+      )
+    )
+  )
+)
+
+(defwidget notification_single_menu [?title ?content ?image ?id ?time]
+(revealer :reveal { id != -121 }
+  :transition "slidedown"
+  (eventbox :onclick './wyvern/scripts/notifManage --close ${id}'
+  (box :orientation 'h' 
+    :space-evenly 'false' 
+    :class "notif_box"
+    (box :style "background-image: url('${image}');"
+      :class 'notif_image'
+      :space-evenly 'false'
+      :vexpand 'false'
+      :halign 'start'
+      :valign 'center'
+    )
+    (box :orientation 'v'
+      :space-evenly 'false' 
+      (box :orientation 'h' 
+        :space-evenly 'false' 
+        (scroll :hexpand 'true' 
+          :hscroll 'true' 
+          :vscroll 'false' 
+          :width 260 
+          (label :halign 'start' 
+            :xalign 0 
+            :limit-width 21
+            :class 'notif_sum' 
+            :text "${title}"
+          )
+        )
+        (label :class "notif_time" :halign 'end' :text "${time}")
+        (button :halign 'end' 
+          :class 'notif_box_clear' 
+          :onclick './wyvern/scripts/notifManage --close ${id}' 
+          '󰅖'
+        )
+      )
+      (label :wrap true 
+        :halign 'start'
+        :vexpand true
+        :class 'notif_body' 
+        :text "${content}"
+      )
+    )
+  )
+  )
+ )
+)
+
+
+(defwidget notificationsboxnc []
+  (box :orientation "v"
+    :width 260
+    :class "notif_main_box"
+    :space-evenly "false"
+    :spacing 1
+    (box :orientation "h"
+      :space-evenly "false"
+      (label :halign "start" :class "notif_box_title" :text "Notifications")
+      (button :halign "end" :class "notif_clear_button" :onclick "./wyvern/scripts/notifManage --clear" "󰎟  Clear")
+    )
+    (scroll :height 620
+      (box :orientation "v" 
+		:space-evenly false
+		(for notif in {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]}
+					(notification_single_menu
+						:title { notif < arraylength(notification_history.notifications) ? notification_history.notifications[notif].summary : "" }
+						:content { notif < arraylength(notification_history.notifications) ? ( notification_history.notifications[notif].body == "null" ? "" : notification_history.notifications[notif].body ) : "" }
+						:image { notif < arraylength(notification_history.notifications) ? ( notification_history.notifications[notif].image == "null" ? "./wyvern/assets/notification_icon.png" : notification_history.notifications[notif].image ) : "" }
+						:id { notif < arraylength(notification_history.notifications) ? notification_history.notifications[notif].id : -121 }
+						:time { notif < arraylength(notification_history.notifications) ? notification_history.notifications[notif].time : "" }
+					)
+		)
+	  )
+    )
+  )
+)
+
+(defwidget contentdb []
+  (box :orientation "h"
+    :space-evenly false
+    (box :orientation "v"
+      :space-evenly "false"
+      :class "db-main-box"
+      :spacing 7
+      (musicboxdb)
+      (box :orientation "h"
+        :class "seperator-box"
+        "---"
+      )
+      (topdb)
+      (slidersdb)
+      (toolsdb)
+    )
+    (box :orientation "v"
+      :space-evenly "false"
+      :class "nc-main-box"
+      :spacing 7
+      (notificationsboxnc)
+    )
+  )
+)
+
+(defwidget hoverlostdb []
+  (eventbox :onhoverlost "./wyvern/bar/scripts/open_dashboard.sh &"
+    (contentdb)
+  )
+)
+
+(defwindow dashboard
+  :monitor 1 
+  :stacking "fg"
+  :wm-ignore false
+  :geometry (geometry :x "0%"
+              :y "0%"
+              :width "70%"
+              :height "70%"
+              :anchor "center")
+	(contentdb)
+)
+

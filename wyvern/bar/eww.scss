@@ -1,0 +1,258 @@
+
+.wsbox {
+    font-size: 1em;
+    font-weight: 600;
+    margin: .5em .5em .5em .5em;
+    padding: .5em .5em .5em .5em;
+    border-radius: 10px;
+    background-color: $bg;
+    color: $fg;
+
+    .wsbox-ani {
+      transition: 250ms;
+
+      &.wsf {
+        background-color: $accent;
+        /*margin: .1em .5em;
+        margin-right: .7em;*/
+        padding-left: 2.2em;
+        padding-right: 2.2em;
+        padding: .2em 2.2em .2em 2.2em;
+        border-radius: 2px;
+        color: $bg;
+      }
+      &.wso {
+        background-color: $bg;
+        padding-left: 1.2em;
+        padding-right: 1.2em;
+        padding: .2em 1.2em .2em 1.2em;
+        border-radius: 2px;
+        color: $fg;
+      }
+      &.ws {
+        background-color: $bg;
+        padding-left: 1.2em;
+        padding-right: 1.2em;
+        padding: .2em 1.2em .2em 1.2em;
+        border-radius: 2px;
+        color: $bg;
+      }
+    }
+}
+
+.bar-main-box {
+  background-color: $bg;
+}
+
+.time-box {
+  margin: .65em .25em .65em .25em;
+  padding: 0 .5em 0 .5em;
+  border-radius: $crounding;
+  background-color: $bg;
+  font-size: 1.1em;
+  font-weight: 500;
+  color: $fg;
+}
+
+.statuses-box {
+  margin: .7em .5em .7em .5em;
+  padding: .5em .5em .5em .5em;
+  background-color: $bg;
+  border-radius: $crounding;
+
+  label {
+    font-size: 1.2em;
+  }
+}
+
+.info-label-disab {
+  color: $disab;
+}
+
+.info-label {
+  color: $fg;
+}
+
+.statuses-box:hover {
+	background-color: $bg-alt-two;
+	
+	.battery-box {
+		background-color: $bg-alt-two;
+	}
+}
+
+.weather-box {
+   margin: .5em;
+   padding: .5em;
+	label {
+		font-size: 1.1em;
+		color: $fg;
+	}
+}
+
+.dashweatherbutton {
+	padding: .15em;
+	margin: .5em;
+	border-radius: 5px;
+	background-color: $bg;
+}
+
+.dashweatherbuttonhover {
+	padding: .15em;
+	margin: .5em;
+	border-radius: 5px;
+	background-color: $bg-alt-two;
+}
+
+.dashboardbutton {
+	color: $fg;
+	font-size: 1.2em;
+	font-weight: 500;
+	padding: .5em;
+	margin: .5em;
+	border-radius: $crounding;
+	background-color: $bg-alt-two;
+}
+
+.battery-box {
+  margin: 0 0 0 .5em; 
+  border-radius: 5px;
+  background-color: $bg;
+  font-size: 1.1em;
+  font-weight: 600;
+  color: $fg;
+
+  .battery_nobe {
+    color: $bg-alt-six;
+    font-size: .6em;
+    margin-top: .228em;
+  }
+
+  .battery-icon {
+    color: $fg;
+    font-size: 1em;
+  }
+  
+  .battery-icon-red {
+    color: $red;
+    font-size: 1em;
+  }
+  
+  .battery-icon-green {
+    color: $green;
+    font-size: 1em;
+  }
+
+  .battery-scale_green {
+    trough {
+      min-height: .9em;
+      min-width: 3.1em;
+      background-color: $bg-alt-two;
+      border-radius: 5px;
+    }
+
+    highlight {
+      padding: .15em;
+      background-color: $bg-alt-three;
+      border-radius: 5px;
+    } 
+    padding: .2em;
+    border-radius: 7px;
+    border: 2px solid $bg-alt-six;
+  }
+
+  .battery-scale_red {
+    trough {
+      min-height: .9em;
+      min-width: 3.1em;
+      background-color: $bg-alt-two;
+      border-radius: 5px;
+    }
+
+    highlight {
+      padding: .15em;
+      background-color: $red;
+      border-radius: 5px;
+    } 
+    padding: .2em;
+    border-radius: 7px;
+    border: 2px solid $bg-alt-six;
+  }
+  .battery-scale_orange {
+    trough {
+      min-height: .9em;
+      min-width: 3.1em;
+      background-color: $bg-alt-two;
+      border-radius: 5px;
+    }
+
+    highlight {
+      padding: .15em;
+      background-color: $orange;
+      border-radius: 5px;
+    } 
+    padding: .2em;
+    border-radius: 7px;
+    border: 2px solid $bg-alt-six;
+  }
+}
+
+.systemtray {
+  margin: .5em .5em .5em .5em;
+  padding: .5em .5em .5em .5em;
+  border-radius: $crounding;
+  background-color: $bg;
+  font-size: 1.1em;
+
+  * {
+    border-radius: $crounding;
+  }
+}
+
+
+.systray_button {
+  font-size: .8em;
+  font-weight: 600;
+  background-color: $bg;
+  padding: .5em .5em .5em .5em;
+  margin: .5em 0em .5em 0em;
+  border-radius: $crounding;
+}
+
+.systray_button:hover {
+  background-color: $bg-alt-two;
+}
+
+.systemtray-two menu {
+  padding: .3em;
+  background-color: $bg;
+  border-radius: $crounding;
+  >menuitem {
+    padding: .3em;
+    background-color: $bg;
+    border-radius: $crounding;
+    color: $fg;
+    margin: .3em;
+
+    &:disabled {
+      color: $disab;
+    }
+  }
+  * {
+    border-radius: $crounding;
+  }
+}
+
+.launcherbox {
+	margin: .5em;
+	padding: .5em;
+	font-size: 1em;
+	font-weight: 500;
+}
+
+.launcherinput {
+    margin: .15em .5em .15em .5em;
+	padding: .25em;
+	border-radius: $crounding;
+	background-color: $bg-alt;
+}

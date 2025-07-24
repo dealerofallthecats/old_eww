@@ -1,0 +1,166 @@
+
+
+
+(defwidget workspaces []
+  (box :class "wsbox"
+    :orientation "h"
+    :halign "center"
+    :valign "center"
+    :space-evenly false
+    :spacing 2
+    (for i in {[0, 1, 2, 3, 4]}
+      (button :onclick "bspc desktop -f ${i+1}"
+        :class "wsbox-ani ${workspaces_classes[i]}"
+        "${i+1}"
+      )
+    )
+  )
+)
+
+
+
+(defwidget statuses []
+(eventbox :cursor "pointer"
+(button :onclick "./wyvern/scripts/open_dashboard.sh &"
+  :class "statuses-box"
+  (box :orientation "h"
+    :valign "center"
+    :space-evenly false
+    :spacing 2
+    (box :orientation "h"
+      :space-evenly false
+      :spacing 15
+      (label :class { net_info[0] != "󰤨" ? ( net_info[0] != "󰤩" ? "info-label-disab" : "info-label" ) : "info-label" } :text "${net_info[0]}")
+      (label :class { blue_info[0] != "󰂯" ? ( blue_info[0] != "󰂱" ? "info-label-disab" : "info-label" ) : "info-label" } :text "${blue_info[0]}")
+    )
+    (box :orientation "h"
+      :valign "end"
+      :class "battery-box"
+      :space-evenly "false"
+      :spacing 0 
+      :tooltip "${battery_per}% of battery left, ${battery_status}."
+      (label :valign "center" :class "battery_nobe" :text "󱓻")
+      (overlay
+	  (scale :class "${battery_class}" 
+	     :min 0
+	     :max 100
+	     :flipped true
+	     :orientation "h"
+	     :value battery_per 
+	  )
+    	  (label :class "${battery_icon_class}" :text "${battery_icon}")
+      )
+    )
+  )
+)
+)
+)
+
+
+(defwidget timeandnotifications []
+    (box :orientation "h"
+      :valign "end"
+      :class "time-box"
+      :space-evenly false
+      :spacing 1
+      :valign "center"
+      (label :class "time-label" :text "${time-hour} : ${time-min} ${time-pmam}   ")
+      (label :style "font-size: .9em; " :text "${day}")
+    )
+)
+
+
+
+(defwidget systemtray []
+  (box :orientation "h"
+    :class "systemtray"
+    :valign "center"
+    (systray :orientation "h"
+      :class "systemtray-two"
+      :icon-size "20"
+      :spacing "7"
+    )
+  )
+)
+
+(defvar reveal_systray false)
+(defvar revealdashboard 0)
+
+(defwindow bar
+  :monitor 0
+  :geometry (geometry :x "-0%"
+    :y "0px"
+    :width "100%"
+    :height "1.4%"
+    :anchor "bottom center"
+    )
+  :stacking "fg"
+  :windowtype "dock"
+  :wm-ignore false
+  :space-evenly false
+  :focusable false
+  (box :orientation "h"
+    :class "bar-main-box"
+  (box :orientation "h"
+    (box :orientation "h"
+      :class "top-box"
+      :halign "start"
+      :space-evenly "false"
+      :spacing 1
+      (workspaces)
+    )
+    (box :orientation "h"
+      :class "middle-box"
+      :halign "center"
+      :space-evenly "false"
+      :vexpand "true"
+      (stack :transition "slidedown"
+         :selected revealdashboard
+         :same-size true
+         (eventbox :onhover "$(which eww) update revealdashboard=1" 
+           (box :orientation "h"
+             :class "weather-box"
+             :space-evenly "false"
+             :spacing 2
+             :halign "center" 
+             (label :halign "center" :text "${weather-icon}")
+             (label :halign "center" :style "font-weight: 600;" :text "${weather-temp}")
+             (label :halign "center" :text ",   ${weather-cond}")
+           )
+         )
+        (eventbox :onhoverlost "$(which eww) update revealdashboard=0"
+           :cursor "pointer"
+           (button :onclick "./wyvern/scripts/open_dashboard.sh &"
+             :halign "center" 
+             (label :halign "center" :class "dashboardbutton" :text "󰁝   Open Dashboard   󰁝")
+           )
+        )
+      )
+    )
+    (box :orientation "h"
+      :class "end-box"
+      :halign "end"
+      :space-evenly "false"
+      :spacing "0"
+      (revealer :transition "slideleft"
+        :reveal reveal_systray
+        :duration "250ms"
+        (eventbox :cursor "pointer"
+          (systemtray)
+        )
+      )
+      (eventbox :cursor "pointer"
+		(button :class "systray_button"
+          :valign "center"
+          :onclick { reveal_systray != false ? "$(which eww) update reveal_systray=false" : "$(which eww) update reveal_systray=true" }
+          { reveal_systray != false ? "" : "" }
+		)
+      )
+      (statuses)
+      (timeandnotifications)
+    )
+  )
+  )
+)
+
+

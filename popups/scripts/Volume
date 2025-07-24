@@ -1,0 +1,49 @@
+#!/bin/bash
+
+CACHE_FILE=$HOME/.cache/$USER/volume_popup_cache
+
+VOLUME_CHANGE_STATE=true
+
+CURRENT_VOLUME=""
+
+volume_popup_loop() {
+  CURRENT_VOLUME=$(amixer get Master | grep -oP '\d+%' | head -1 | tr -d '%')
+  sleep 0.5
+  while [[ VOLUME_CHANGE_STATE = true ]]; do
+    if [[ CURRENT_VOLUME != "$(amixer get Master | grep -oP '\d+%' | head -1 | tr -d '%')" ]]; then
+      sleep 0.5
+    else
+      VOLUME_CHANGE_STATE=false
+    fi
+  done
+  sleep 2
+  ~/eww-source/target/release/eww close pop_volume
+  rm "$CACHE_FILE"
+}
+
+start_volume_popup_loop() {
+  if [[ -f "$CACHE_FILE" ]]; then
+    echo "there"
+    exit
+  else
+    echo "not there"
+    touch "$CACHE_FILE"
+    ~/eww-source/target/release/eww open pop_volume
+    volume_popup_loop
+  fi
+}
+
+increase_vol() {
+  amixer -q set Master 3%+ unmute
+  start_volume_popup_loop
+}
+
+decrease_vol() {
+  amixer -q set Master 3%- unmute
+  start_volume_popup_loop
+}
+
+case $1 in
+--inc) increase_vol ;;
+--dec) decrease_vol ;;
+esac

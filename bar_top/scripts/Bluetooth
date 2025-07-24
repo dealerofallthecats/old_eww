@@ -1,0 +1,13 @@
+#!/bin/bash
+
+is_on() {
+  bluetoothctl show | grep 'PowerState' | tr -d 'PwerState: \t' | tail -c+2
+}
+
+if [[ "$(is_on)" == "on" ]]; then
+  ICON="󰂯"
+else
+  ICON="󰂲"
+fi
+
+echo "$ICON"

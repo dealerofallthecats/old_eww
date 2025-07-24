@@ -1,0 +1,133 @@
+.bar {
+  background-color: $bg;
+  padding-top: .5em;
+  padding-bottom: .5em;
+  border: 2px solid $bg-alt-two;
+  border-left: none;
+  border-right: none;
+}
+
+.weather-box-bar {
+  margin: .0em .5em .0em;
+  padding: .3em;
+  padding-left: .5em;
+  border-radius: $crounding;
+  background-color: $bg;
+  font-size: 1.1em;
+  color: $fg;
+
+  .weather-icon-bar {
+    font-size: 1.6em;
+    margin-left: .2em;
+  }
+
+  .weather-box-detail-bar {
+    margin-left: .1em;
+    margin-right: .5em;
+    
+    label {
+      font-size: .9em;
+    }
+  }
+
+}
+
+.taskbar_item {
+  .icon {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    min-height: 29px;
+    min-width: 31px;
+    border-radius: $crounding;
+    margin: 7px;
+    margin-top: 10px;
+    margin-bottom: 0px;
+    padding: 1px;
+  }
+  .indicator {
+    transition: padding-right 500ms;
+    background-color: $grey;
+    min-height: 2px;
+    border-radius: $crounding;
+    margin-top: 4px;
+    margin-right: 12px;
+    margin-left: 12px;
+    padding-top: 2px;
+    padding-right: 20px;
+  }
+  .indicator-focused {
+    transition: padding-right 500ms;
+    background-color: $accent;
+    min-height: 2px;
+    border-radius: $crounding;
+    margin-top: 4px;
+    margin-right: 10px;
+    margin-left: 10px;
+    padding-top: 2px;
+    padding-right: 20px;
+  }
+}
+
+
+.startmenu_icon {
+  .icon {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    min-height: 34px;
+    min-width: 34px;
+    border-radius: $crounding;
+    margin: 7px;
+    margin-right: 5px;
+    padding: 1px;
+  }
+}
+
+
+.pinnedapp_item {
+  .icon {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    min-height: 29px;
+    min-width: 31px;
+    border-radius: $crounding;
+    margin: 7px;
+    margin-bottom: 0px;
+    padding: 1px;
+  }
+  .indicator {
+    transition: padding-right 500ms;
+    background-color: $grey;
+    min-height: 2px;
+    border-radius: $crounding;
+    margin-top: 4px;
+    margin-right: 12px;
+    margin-left: 12px;
+    padding-top: 2px;
+    padding-right: 20px;
+  }
+  .indicator-focused {
+    transition: padding-right 500ms;
+    background-color: $accent;
+    min-height: 2px;
+    border-radius: $crounding;
+    margin-top: 4px;
+    margin-right: 10px;
+    margin-left: 10px;
+    padding-top: 2px;
+    padding-right: 20px;
+  }
+  .indicator-off {
+    transition: padding-right 500ms;
+    background-color: $bg;
+    min-height: 2px;
+    border-radius: $crounding;
+    margin-top: 4px;
+    margin-right: 10px;
+    margin-left: 10px;
+    padding-top: 2px;
+    padding-right: 20px;
+  }
+}

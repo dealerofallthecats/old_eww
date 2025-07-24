@@ -1,0 +1,11 @@
+@import "./themes/current.scss"
+
+// Global Settings
+* {
+  all: unset;
+  font-family: "SF Pro Display";
+}
+
+// Styles
+@import "./notifications/eww.scss"
+@import "./lockscreen/eww.scss"

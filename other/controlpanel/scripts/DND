@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+CACHE_FILE="$HOME/.cache/$(whoami)/dnd_state"
+
+mkdir -p "$(dirname "$CACHE_FILE")"
+[[ -f "$CACHE_FILE" ]] || echo Off >"$CACHE_FILE"
+
+get_state() {
+	cat "$CACHE_FILE"
+}
+
+gamemode_on() {
+	dunstctl set-paused true
+	echo On >"$CACHE_FILE"
+}
+
+gamemode_off() {
+	dunstctl set-paused false
+	echo Off >"$CACHE_FILE"
+}
+
+toggle() {
+	if [[ $(get_state) == "Off" ]]; then
+        gamemode_on
+    else
+        gamemode_off
+    fi
+}
+
+
+case "$1" in
+    --toggle) toggle ;;
+    --status) get_state ;;
+    *) echo "Usage: $0 [--toggle|--status]" ;;
+esac

@@ -1,0 +1,111 @@
+
+
+
+.ws {
+	font-size: 1.1em;
+	margin: .5em .5em .0em;
+	padding: .25em .5em;
+	border-radius: $crounding;
+  background-color: $bg;
+
+  .wso {
+    background-color: $bg;
+    margin: .1em .5em;
+	  padding: .2em .2em;
+	  border-radius: $crounding;
+    color: $disab;
+  }
+  .wsf {
+    background-color: $bg;
+    margin: .1em .5em;
+    padding: .2em .2em;
+	  border-radius: $crounding; 
+    color: $accent;
+    font-weight: bold;
+  }
+  .ws {
+    background-color: $bg;
+    margin: .1em .5em;
+	  padding: .2em .2em;
+	  border-radius: $crounding;
+    color: $bg-alt-three;
+  }
+}
+
+.bar-main-box-top {
+  background-color: $bg;
+  padding: 0px 20px 0px 20px;
+}
+
+.bar_top {
+  border-radius: $crounding;
+}
+
+// Sys tray
+.systemtray-top {
+  margin: .0em 1em .0em;
+  padding: .25em .25em;
+  border-radius: $crounding;
+  background-color: $bg;
+  font-size: 1.1em;
+}
+
+.systemtray-top-two menu {
+  padding: .3em;
+  background-color: $bg;
+  border-radius: $crounding;
+  >menuitem {
+    padding: .3em;
+    background-color: $bg;
+    border-radius: $crounding;
+    color: $fg;
+    margin: .3em;
+
+    &:disabled {
+      color: $disab;
+    }
+  }
+  * {
+    border-radius: $crounding;
+  }
+} 
+
+// Music box styles
+.music-box-top {
+  border-radius: $crounding;
+  background-color: $bg;
+  min-width: 100px;
+
+  .music-cover-top {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    min-height: 45px;
+    min-width: 45px;
+    border-radius: $crounding;
+  }
+
+  .music-text {
+    background-color: $bg;
+  }
+
+  .music-play-button {
+    background-color: $bg;
+    color: $fg;
+    font-size: .7em;
+    margin-left: 1em;
+  }
+
+  .music-play-button:hover {
+    color: $accent;
+  }
+}
+
+.quicksettingsbutton {
+  background-color: $bg;
+  color: $fg;
+}
+
+.quicksettingsbutton:hover {
+  color: $accent;
+}

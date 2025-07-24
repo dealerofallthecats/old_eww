@@ -1,0 +1,198 @@
+
+.ws {
+  font-size: 1.1em;
+  font-family: "0xProto Nerd Font";
+  margin: .5em 0 .5em 0;
+  padding: 0 .35em 0 .35em;
+  border-radius: 10px;
+  background-color: $bg;
+
+  .wsf {
+    margin: .5em;
+    color: $accent;
+    background-color: $bg-alt;
+    padding: .5em;
+    font-weight: 600;
+  }
+  .wso {
+    margin: .5em;
+    color: $disab;
+    padding: 0 .5em 0 .5em;
+  }
+  .ws {
+    margin: .5em;
+    color: $bg-alt-two;
+    padding: 0 .5em 0 .5em;
+  }
+}
+
+.bar-main-box {
+  background-color: $bg;
+}
+
+.bar {
+  border-radius: 0px;
+}
+
+.time-box {
+  margin: .5em .5em .3em;
+  padding: .25em .5em;
+  border-radius: 10px;
+  background-color: $bg;
+  font-size: 1.1em;
+  font-weight: 600;
+  color: $accent;
+}
+
+.quicksettings-bar {
+  margin: .5em .5em .5em;
+  padding: .25em .25em;
+  border-radius: 10px;
+  background-color: $bg;
+  font-size: 1.4em;
+  color: $fg;
+
+  button {
+    color: $fg;
+    background-color: $bg;
+  }
+}
+
+.battery-box {
+  margin: .5em .5em 1em; 
+  padding: 0 .7em 0 .7em;
+  border-radius: 10px;
+  background-color: $bg;
+  font-size: 1.1em;
+  font-weight: 600;
+  color: $fg;
+
+.battery_nobe {
+    color: $disab;
+    font-size: .6em;
+    margin-top: .228em;
+  }
+
+  .battery-icon {
+    color: $fg;
+    font-size: 1em;
+  }
+
+  .battery-icon-red {
+    color: $red;
+    font-size: 1em;
+  }
+
+  .battery-icon-green {
+    color: $green;
+    font-size: 1em;
+  }
+
+  .battery-scale_green {
+    trough {
+      min-height: 3.1em;
+      min-width: .9em;
+      background-color: $bg-alt-two;
+      border-radius: 0px;
+    }
+
+    highlight {
+      padding: .15em;
+      background-color: $green;
+      border-radius: 0px;
+    }
+    padding: .2em;
+    border-radius: 0px;
+    border: 2px solid $disab;
+  }
+
+.battery-scale_red {
+    trough {
+      min-height: 3.1em;
+      min-width: .9em;
+      background-color: $bg-alt-two;
+      border-radius: 0px;
+    }
+
+    highlight {
+      padding: .15em;
+      background-color: $red;
+      border-radius: 0px;
+    }
+    padding: .2em;
+    border-radius: 0px;
+    border: 2px solid $disab;
+  }
+  .battery-scale_orange {
+    trough {
+      min-height: 3.1em;
+      min-width: .9em;
+      background-color: $bg-alt-two;
+      border-radius: 0px;
+    }
+
+    highlight {
+      padding: .15em;
+      background-color: $orange;
+      border-radius: 0px;
+    }
+    padding: .2em;
+    border-radius: 0px;
+    border: 2px solid $disab;
+  }
+}
+
+.powermode-box {
+  margin: 1em .5em 1em;
+  padding: .25em .25em;
+  border-radius: 10px;
+  background-color: $bg;
+  font-size: 1.1em;
+  font-weight: 600;
+  color: $fg;
+
+  button {
+    color: $fg;
+    background-color: $bg;
+  }
+}
+
+.systemtray {
+  margin: .5em .5em .5em;
+  padding: .25em .25em;
+  background-color: $bg;
+  font-size: 1.1em;
+
+  * {
+    border-radius: $crounding;
+  }
+}
+
+.systemtray-two menu {
+  padding: .3em;
+  background-color: $bg;
+  >menuitem {
+    padding: .3em;
+    background-color: $bg;
+    color: $fg;
+    margin: .3em;
+
+    &:disabled {
+      color: $disab;
+    }
+  }
+}
+
+.fakecornerl {
+  background-color: transparent;
+}
+
+.fakecornersl {
+  transition: box-shadow 500ms, border-radius 500ms, margin 500ms;
+  border-radius: 8px; 
+  box-shadow: 
+    -20px -20px 0px $bg,
+    -20px 20px 0px $bg,
+    20px 20px 0px $bg,
+    20px -20px 0px $bg
+}

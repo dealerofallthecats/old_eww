@@ -1,0 +1,13 @@
+@import "./themes/current.scss"
+
+// Global Settings
+* {
+  all: unset;
+  font-family: "Product Sans";
+}
+
+// Styles
+@import "./left/eww.scss"
+@import "./right/eww.scss"
+@import "./notifications/eww.scss"
+@import "./lockscreen/eww.scss"

@@ -1,0 +1,29 @@
+
+(defpoll GETVOLUME :interval "100ms" "amixer get Master | grep -oP '\\d+%' | head -1 | tr -d '%'")
+
+(defwidget pop_volume_w []
+  (box :orientation "h"
+    :space-evenly false
+    :halign "center"
+    (label :text GETVOLUME)
+    (box (scale :min 0
+        :max 101
+        :value GETVOLUME 
+        :width 150
+        :orientation "horizontal"
+        :onchange "amixer set Master {}%"))))
+
+
+(defwindow pop_volume
+    :stacking "fg"
+    :windowtype "dock"
+    :wm-ignore false
+    :geometry (geometry
+        :x "0"
+        :y "-30px"
+        :anchor "bottom center"
+        :width "270px"
+        :height "70px"
+    )
+    (pop_volume_w)
+)
