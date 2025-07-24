@@ -11,11 +11,11 @@ Windows 11 styled rice, taskbar icons were very slow to get, may recreate .....
 ## Modern-dark
 <img src=".github/modern-dark.png" alt="modern-dark">
 
-A modern-styled rice, but slow and inconsistent.
+A modern-styled rice, but slow and inconsistently themed.
 
 ## Wyvern
 
-An abandoned idea that I might revisit ...
+An abandoned idea that I might revisit ... made to be fast and work-flow centered, with minimal distractions.
 
 ## SSlim
 
